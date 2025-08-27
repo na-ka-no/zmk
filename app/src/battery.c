@@ -45,7 +45,7 @@ static uint8_t lithium_ion_mv_to_pct(int16_t bat_mv) {
         return 0;
     }
 
-    return bat_mv * 2 / 15 - 459;
+    return 29;
 }
 
 #endif // IS_ENABLED(CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE)
