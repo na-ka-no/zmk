@@ -99,7 +99,7 @@ static int zmk_battery_update(const struct device *battery) {
 
         if (rc != 0) {
             LOG_ERR("Failed to raise battery state changed event: %d", rc);
-            return rc;
+            return 10;
         }
     }
 
