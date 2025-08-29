@@ -35,6 +35,16 @@ struct bvd_data {
     struct battery_value value;
 };
 
+static uint8_t nimh_mv_to_pct(int16_t bat_mv) {    
+    if (bat_mv >= 3360) {
+        return 100;
+    } else if (bat_mv <= 2940) {
+        return 0;
+    }
+
+    return bat_mv / 4.2 - 700;
+    }
+
 static int bvd_sample_fetch(const struct device *dev, enum sensor_channel chan) {
     struct bvd_data *drv_data = dev->data;
     const struct bvd_config *drv_cfg = dev->config;
@@ -47,15 +57,7 @@ static int bvd_sample_fetch(const struct device *dev, enum sensor_channel chan) 
         return -ENOTSUP;
     }
 
-static uint8_t nimh_mv_to_pct(int16_t bat_mv) {    
-    if (bat_mv >= 3360) {
-        return 100;
-    } else if (bat_mv <= 2940) {
-        return 0;
-    }
-
-    return bat_mv / 4.2 - 700;
-    }
+    
 
     int rc = 0;
 
