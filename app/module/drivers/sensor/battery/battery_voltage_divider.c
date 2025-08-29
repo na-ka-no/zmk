@@ -47,6 +47,16 @@ static int bvd_sample_fetch(const struct device *dev, enum sensor_channel chan) 
         return -ENOTSUP;
     }
 
+static uint8_t nimh_mv_to_pct(int16_t bat_mv) {    
+    if (bat_mv >= 3360) {
+        return 100;
+    } else if (bat_mv <= 2940) {
+        return 0;
+    }
+
+    return bat_mv / 4.2 - 700;
+    }
+
     int rc = 0;
 
 #if DT_INST_NODE_HAS_PROP(0, power_gpios)
@@ -75,18 +85,6 @@ static int bvd_sample_fetch(const struct device *dev, enum sensor_channel chan) 
         uint16_t millivolts = val * (uint64_t)drv_cfg->full_ohm / drv_cfg->output_ohm;
         LOG_DBG("ADC raw %d ~ %d mV => %d mV", drv_data->value.adc_raw, val, millivolts);
 
-        static uint8_t nimh_mv_to_pct(int16_t bat_mv) {
-            
-            if (bat_mv >= 3360) {
-                return 100;
-            } else if (bat_mv <= 2940) {
-                return 0;
-            }
-        
-            return bat_mv / 4.2 - 700;
-        }
-
-        
         uint8_t percent = nimh_mv_to_pct(millivolts);
         LOG_DBG("Percent: %d", percent);
 
