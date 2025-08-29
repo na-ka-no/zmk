@@ -39,13 +39,13 @@ static uint8_t lithium_ion_mv_to_pct(int16_t bat_mv) {
     // Simple linear approximation of a battery based off adafruit's discharge graph:
     // https://learn.adafruit.com/li-ion-and-lipoly-batteries/voltages
 
-    if (bat_mv >= 4200) {
+    if (bat_mv >= 3360) {
         return 100;
-    } else if (bat_mv <= 3450) {
+    } else if (bat_mv <= 2940) {
         return 0;
     }
 
-    return bat_mv * 2 / 15 - 459;
+    return bat_mv / 4.2 - 700;
 }
 
 #endif // IS_ENABLED(CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE)
