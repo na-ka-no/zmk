@@ -36,13 +36,13 @@ struct bvd_data {
 };
 
 static uint8_t nimh_mv_to_pct(int16_t bat_mv) {    
-    if (bat_mv >= 2400) {
+    if (bat_mv >= 2350) {
         return 100;
-    } else if (bat_mv <= 2100) {
+    } else if (bat_mv <= 1950) {
         return 0;
     }
 
-    return bat_mv /3  - 700;
+    return bat_mv /4  - 487.5;
     }
 
 static int bvd_sample_fetch(const struct device *dev, enum sensor_channel chan) {
