@@ -47,10 +47,10 @@ uint8_t lithium_ion_mv_to_pct(int16_t bat_mv) {
     }  
     int16_t avg_mv = sum / count;  
       
-    if (avg_mv >= 2350) {  
+    if (avg_mv >= 2550) {  
         return 100;  
-    } else if (avg_mv <= 1950) {  
+    } else if (avg_mv <= 2150) {  
         return 0;  
     }  
-    return avg_mv / 4 - 487.5;  
+    return avg_mv / 4 - 537.5; 
 }
